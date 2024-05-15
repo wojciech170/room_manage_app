@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add Room</title>
+    <title>Edit {{ room.name }}</title>
 </head>
 <body>
+    <h1 align="center">Edit {{ room.name }}</h1>
     <form action="" method="post">
+        <input type="hidden" value="{{ room.id }}" name="room_id">
         {% csrf_token %}
         <label>
-            Room Name:
-            <input type="text" name="name">
+            Name:
+            <input type="text" name="name" value="{{ room.name }}">
         </label>
-        <label>
+         <label>
             Capacity:
-            <input type="number" name="capacity">
+            <input type="number" name="capacity" value="{{ room.capacity }}">
         </label>
         <label>
             Projector?
@@ -22,5 +24,6 @@
         </label>
         <button type="submit">Submit</button>
     </form>
+
 </body>
 </html>

@@ -15,13 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 
-from management.views import AddRoomView, index
+from management.views import (
+    AddRoomView,
+    index,
+    RoomsView,
+    DeleteRoomView,
+    EditRoomView,
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),
-    path('room/new', AddRoomView.as_view()),
+    path('room/new/', AddRoomView.as_view()),
+    path('all-rooms/', RoomsView.as_view()),
+    re_path(r'^room/delete/(?P<room_id>[0-9]+)', DeleteRoomView.as_view()),
+    re_path(r'^room/modify/(?P<room_id>[0-9]+)', EditRoomView.as_view()),
 ]
