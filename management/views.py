@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from management.models import Room
+from management.models import Room, RoomReservation
+from datetime import date, datetime
 
 
 class ValidateMixin:
@@ -46,7 +47,7 @@ class AddRoomView(ValidateMixin, View):
 
         new_room = Room(name=name, capacity=capacity, projector=projector)
         new_room.save()
-        return HttpResponse("Room added", status=201)
+        return HttpResponse("Room added<br><a href='/all-rooms/'>Rooms list</a>", status=201)
 
 
 class RoomsView(View):
@@ -61,11 +62,10 @@ class RoomsView(View):
 
 
 class DeleteRoomView(View):
-    def get(self, request):
-        id = request.GET.get('id')
-        room = Room.objects.get(id=id)
+    def get(self, request, room_id):
+        room = Room.objects.get(id=room_id)
         room.delete()
-        return redirect("all-rooms/")
+        return redirect("/all-rooms/")
 
 
 class EditRoomView(ValidateMixin, View):
@@ -88,3 +88,31 @@ class EditRoomView(ValidateMixin, View):
         room.save()
         return redirect("/all-rooms/")
 
+
+class RoomReservationView(View):
+    def get(self, request, room_id):
+        room = Room.objects.get(id=room_id)
+        ctx = {
+            "room": room
+        }
+        return render(request,"reserve_form.html", ctx)
+
+    def post(self, request, room_id):
+        res_date_str = request.POST.get('date')
+        try:
+            res_date = datetime.strptime(res_date_str, '%Y-%m-%d').date()
+        except (ValueError, TypeError):
+            return HttpResponse("Invalid date", status=400)
+
+        if res_date < date.today():
+            return HttpResponse("Date can't be from past", status=400)
+
+        room = Room.objects.get(id=room_id)
+        res_comment = request.POST.get('comment')
+        reservation_exist = RoomReservation.objects.filter(room_id=room_id, date=res_date).exists()
+
+        if reservation_exist:
+            return HttpResponse("Room already reserved for that day", status=400)
+        else:
+            new_reservation = RoomReservation.objects.create(date=res_date, comment=res_comment, room=room)
+            return redirect("/all-rooms/")
