@@ -5,11 +5,11 @@
     <title>List of Rooms</title>
 </head>
 <body>
-    <h1 align="center">List of Rooms</h1>
+    <h1>List of Rooms:</h1>
     <ul>
         {% for room in rooms %}
         <li>
-            <label>Name:</label> {{ room.name }}  
+            <label>Name:</label> <a href="/room/{{ room.id }}"> {{ room.name }} </a>
             <label>Capacity: </label> {{ room.capacity }} 
             <label>Available: </label> 
             <label>Projector:</label> {% if room.projector == True %} Yes {% else %} No {% endif %}

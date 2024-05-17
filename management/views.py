@@ -116,3 +116,17 @@ class RoomReservationView(View):
         else:
             new_reservation = RoomReservation.objects.create(date=res_date, comment=res_comment, room=room)
             return redirect("/all-rooms/")
+
+
+class RoomDetailsView(View):
+    def get(self, request, room_id):
+        try:
+            room = Room.objects.get(id=room_id)
+        except Room.DoesNotExist:
+            return HttpResponse("Room not found", status=404)
+        room_reservations = RoomReservation.objects.filter(room=room).order_by('date')
+        ctx = {
+            "room": room,
+            "room_reservations": room_reservations,
+        }
+        return render(request, "room_details.html", ctx)

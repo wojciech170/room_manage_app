@@ -24,6 +24,7 @@ from management.views import (
     DeleteRoomView,
     EditRoomView,
     RoomReservationView,
+    RoomDetailsView,
 )
 
 
@@ -35,4 +36,5 @@ urlpatterns = [
     re_path(r'^room/delete/(?P<room_id>[0-9]+)', DeleteRoomView.as_view()),
     re_path(r'^room/modify/(?P<room_id>[0-9]+)', EditRoomView.as_view()),
     re_path(r'^room/reserve/(?P<room_id>[0-9]+)', RoomReservationView.as_view()),
+    re_path(r'^room/(?P<room_id>[0-9]+)', RoomDetailsView.as_view()),
 ]
