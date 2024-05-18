@@ -18,5 +18,12 @@
         </label>
         <button type="submit">Submit</button>
     </form>
+    <ul><label>Reservation:</label>
+        {% for reservation in room_reservations %}
+            <li>{{ reservation.date }} <br>Comment: {{ reservation.comment }}</li>
+        {% empty %}    
+            <br>No Reservation
+        {% endfor %}
+    </ul>
 </body>
 </html>

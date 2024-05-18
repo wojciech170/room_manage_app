@@ -11,6 +11,8 @@
     <ul><label>Reservation:</label>
         {% for reservation in room_reservations %}
             <li>{{ reservation.date }} <br>Comment: {{ reservation.comment }}</li>
+        {% empty %}
+            <br> No reservation
         {% endfor %}
     </ul>
     <label><a href="/room/modify/{{ room.id }}">Edit</a> </label>

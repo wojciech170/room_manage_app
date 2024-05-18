@@ -53,10 +53,16 @@ class AddRoomView(ValidateMixin, View):
 class RoomsView(View):
     def get(self, request):
         rooms = Room.objects.all()
+
+        for room in rooms:
+            reservations_dates = [reservations.date for reservations in room.roomreservation_set.all()]
+            room.reserved = date.today() in reservations_dates
+
         if not rooms:
             return HttpResponse("No available rooms", status=400)
+
         ctx = {
-            "rooms": rooms
+            "rooms": rooms,
         }
         return render(request, "rooms_list.html", ctx)
 
@@ -91,9 +97,14 @@ class EditRoomView(ValidateMixin, View):
 
 class RoomReservationView(View):
     def get(self, request, room_id):
-        room = Room.objects.get(id=room_id)
+        try:
+            room = Room.objects.get(id=room_id)
+        except Room.DoesNotExist:
+            return HttpResponse("Room not found", status=404)
+        room_reservations = RoomReservation.objects.filter(room=room).order_by('date')
         ctx = {
-            "room": room
+            "room": room,
+            "room_reservations": room_reservations,
         }
         return render(request,"reserve_form.html", ctx)
 
