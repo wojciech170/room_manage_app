@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 
 class ValidateMixin:
-    def validate_data(self,request, room_id=None):
+    def validate_data(self, request, room_id=None):
         name = request.POST.get('name')
         capacity = request.POST.get('capacity')
 
@@ -106,7 +106,7 @@ class RoomReservationView(View):
             "room": room,
             "room_reservations": room_reservations,
         }
-        return render(request,"reserve_form.html", ctx)
+        return render(request, "reserve_form.html", ctx)
 
     def post(self, request, room_id):
         res_date_str = request.POST.get('date')
@@ -125,7 +125,7 @@ class RoomReservationView(View):
         if reservation_exist:
             return HttpResponse("Room already reserved for that day", status=400)
         else:
-            new_reservation = RoomReservation.objects.create(date=res_date, comment=res_comment, room=room)
+            RoomReservation.objects.create(date=res_date, comment=res_comment, room=room)
             return redirect("/all-rooms/")
 
 

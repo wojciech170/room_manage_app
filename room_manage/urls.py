@@ -25,6 +25,7 @@ from management.views import (
     EditRoomView,
     RoomReservationView,
     RoomDetailsView,
+    SearchView,
 )
 
 
@@ -37,4 +38,5 @@ urlpatterns = [
     re_path(r'^room/modify/(?P<room_id>[0-9]+)', EditRoomView.as_view()),
     re_path(r'^room/reserve/(?P<room_id>[0-9]+)', RoomReservationView.as_view()),
     re_path(r'^room/(?P<room_id>[0-9]+)', RoomDetailsView.as_view()),
+    re_path(r'^search(?P<name>\w)(?P<capacity>[0-9]+)(?P<projector>True|False)$', SearchView.as_view()),
 ]
