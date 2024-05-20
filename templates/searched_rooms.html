@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Searched rooms</title>
+</head>
+<body>
+    <h1>Search Result:</h1>
+    <ul>
+        {% for room in searched_rooms %}
+        <li>
+            <label>Name:</label> <a href="/room/{{ room.id }}"> {{ room.name }} </a>
+            <label>Capacity: </label> {{ room.capacity }}
+{#            <label>Available: </label> {% if room.reserved %} No {% else %} Yes {% endif %}#}
+            <label>Projector:</label> {% if room.projector == True %} Yes {% else %} No {% endif %}
+            <label><a href="/room/modify/{{ room.id }}">Edit</a> </label>
+            <label><a href="/room/delete/{{ room.id }}">Delete</a> </label>
+            <label><a href="/room/reserve/{{ room.id }}">Reserve</a> </label>
+        </li>
+            {% empty %}
+            No rooms for specify criteria
+        {% endfor %}
+    </ul>
+</body>
+</html>

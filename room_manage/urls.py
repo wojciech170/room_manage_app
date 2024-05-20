@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
+from django.views.decorators.csrf import csrf_exempt
 
 from management.views import (
     AddRoomView,
@@ -38,5 +39,5 @@ urlpatterns = [
     re_path(r'^room/modify/(?P<room_id>[0-9]+)', EditRoomView.as_view()),
     re_path(r'^room/reserve/(?P<room_id>[0-9]+)', RoomReservationView.as_view()),
     re_path(r'^room/(?P<room_id>[0-9]+)', RoomDetailsView.as_view()),
-    re_path(r'^search(?P<name>\w)(?P<capacity>[0-9]+)(?P<projector>True|False)$', SearchView.as_view()),
+    re_path(r'^search/$', csrf_exempt(SearchView.as_view())),
 ]

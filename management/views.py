@@ -1,6 +1,9 @@
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+
 from management.models import Room, RoomReservation
 from datetime import date, datetime
 
@@ -141,3 +144,22 @@ class RoomDetailsView(View):
             "room_reservations": room_reservations,
         }
         return render(request, "room_details.html", ctx)
+
+
+class SearchView(View):
+    def get(self, request):
+        searched_name = request.GET.get('search_name', '')
+        searched_capacity = request.GET.get('search_capacity', 0)
+        searched_projector = request.GET.get('search_projector', [0, 1])
+
+        try:
+            searched_rooms = Room.objects.filter(
+                Q(name__icontains=searched_name) &
+                Q(capacity__gte=searched_capacity) &
+                Q(projector__in=searched_projector)
+            )
+        except Room.DoesNotExist:
+            searched_rooms = []
+
+        return render(request, "searched_rooms.html", {"searched_rooms": searched_rooms})
+

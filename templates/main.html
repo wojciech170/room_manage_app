@@ -7,7 +7,26 @@
 <body>
     <a href="/all-rooms/" >All Rooms</a>
     <a href="/room/new/" >Add Room</a>
-    
+
+    <h2>Search:</h2>
+    <form action="/search" method="get">
+        <label>
+            Name:
+            <input type="text" name="search_name">
+        </label>
+        <label>
+            Capacity:
+            <input type="number" name="search_capacity">
+        </label>
+        <label>
+            Projector?
+            <input type="radio" name="search_projector " value="1" id="yes">
+            <label for="yes">Yes</label>
+            <input type="radio" name="search_projector " value="0" id="no">
+            <label for="no">No</label>
+        </label>
+        <button type="submit">Search</button>
+    </form>
 <footer style="position: absolute; bottom: 0" >
     <p>Author: Wojciech Pindel</p>
     <p><a href="mailto:wojciech170@gmail.com">wojciech170@gmail.com</a></p>
