@@ -2,7 +2,6 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.decorators.csrf import csrf_exempt
 
 from management.models import Room, RoomReservation
 from datetime import date, datetime
@@ -162,4 +161,3 @@ class SearchView(View):
             searched_rooms = []
 
         return render(request, "searched_rooms.html", {"searched_rooms": searched_rooms})
-

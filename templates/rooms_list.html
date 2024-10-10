@@ -5,20 +5,20 @@
     <title>List of Rooms</title>
 </head>
 <body>
-    <h1>List of Rooms:</h1>
-    <ul>
-        {% for room in rooms %}
+<h1>List of Rooms:</h1>
+<ul>
+    {% for room in rooms %}
         <li>
             <label>Name:</label> <a href="/room/{{ room.id }}"> {{ room.name }} </a>
-            <label>Capacity: </label> {{ room.capacity }} 
+            <label>Capacity: </label> {{ room.capacity }}
             <label>Available: </label> {% if room.reserved %} No {% else %} Yes {% endif %}
             <label>Projector:</label> {% if room.projector == True %} Yes {% else %} No {% endif %}
             <label><a href="/room/modify/{{ room.id }}">Edit</a> </label>
             <label><a href="/room/delete/{{ room.id }}">Delete</a> </label>
             <label><a href="/room/reserve/{{ room.id }}">Reserve</a> </label>
         </li>
-        {% endfor %}
-    </ul>
+    {% endfor %}
+</ul>
 
 </body>
 </html>

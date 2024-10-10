@@ -5,18 +5,18 @@
     <title>Room Details</title>
 </head>
 <body>
-    <h1>{{ room.name }} </h1>
-    <label>Capacity: </label> {{ room.capacity }} <br>
-    <label>Projector:</label> {% if room.projector == True %} Yes {% else %} No {% endif %}<br>
-    <ul><label>Reservation:</label>
-        {% for reservation in room_reservations %}
-            <li>{{ reservation.date }} <br>Comment: {{ reservation.comment }}</li>
-        {% empty %}
-            <br> No reservation
-        {% endfor %}
-    </ul>
-    <label><a href="/room/modify/{{ room.id }}">Edit</a> </label>
-    <label><a href="/room/delete/{{ room.id }}">Delete</a> </label>
-    <label><a href="/room/reserve/{{ room.id }}">Reserve</a> </label>
+<h1>{{ room.name }} </h1>
+<label>Capacity: </label> {{ room.capacity }} <br>
+<label>Projector:</label> {% if room.projector == True %} Yes {% else %} No {% endif %}<br>
+<ul><label>Reservation:</label>
+    {% for reservation in room_reservations %}
+        <li>{{ reservation.date }} <br>Comment: {{ reservation.comment }}</li>
+    {% empty %}
+        <br> No reservation
+    {% endfor %}
+</ul>
+<label><a href="/room/modify/{{ room.id }}">Edit</a> </label>
+<label><a href="/room/delete/{{ room.id }}">Delete</a> </label>
+<label><a href="/room/reserve/{{ room.id }}">Reserve</a> </label>
 </body>
 </html>
