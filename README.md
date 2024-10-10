@@ -1,6 +1,6 @@
 # Room manage app
 
-Web application to manage conference room. First project in **CodersLab** "Python Developer" course make by me following set of instruction. 
+Web application for managing a conference room. The first project in the **CodersLab** course "Python Developer" made by me according to a set of instructions.
 
 # Features
 - Viewing actual status
